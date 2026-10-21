@@ -1,15 +1,17 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v2",
   "%Name":"sngMenuSound",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
-  "bitRate":128,
+  "channelFormat":1,
   "compression":3,
+  "compressionQuality":4,
   "conversionMode":0,
   "duration":0.08272109,
+  "exportDir":"",
   "name":"sngMenuSound",
   "parent":{
     "name":"Sounds",
@@ -20,6 +22,5 @@
   "resourceVersion":"2.0",
   "sampleRate":22050,
   "soundFile":"sngMenuSound.ogg",
-  "type":1,
   "volume":1.0,
 }
