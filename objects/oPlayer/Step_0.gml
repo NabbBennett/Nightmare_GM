@@ -1,0 +1,81 @@
+//1. Verification in the movement
+
+if (instance_exists(oTextBox) || instance_exists(oPause_menu) || room == rmBath_Start || room == rmBath_Start_2) {
+    can_move = false;
+} else {
+    can_move = true;
+}
+
+//2. movement ability ONLY if it can
+
+if (can_move) {	
+	right_key = keyboard_check(ord("D"));
+	left_key = keyboard_check(ord("A"));
+	up_key = keyboard_check(ord("W"));
+	down_key = keyboard_check(ord("S"));
+
+	xspd = (right_key - left_key) * move_spd;
+  	yspd = (down_key - up_key) * move_spd;
+	
+	if (keyboard_check_pressed(ord("W"))) face = UP;
+    else if (keyboard_check_pressed(ord("S"))) face = DOWN;
+    else if (keyboard_check_pressed(ord("A"))) face = LEFT;
+    else if (keyboard_check_pressed(ord("D"))) face = RIGHT;
+} else {
+	xspd = 0;
+	yspd = 0;
+}
+
+// 3. Collisions
+	if (place_meeting(x + xspd, y, oWall)) xspd = 0;
+	if (place_meeting(x, y + yspd, oWall)) yspd = 0;
+
+// 4. Aply movement
+	x += xspd;
+	y += yspd;
+
+// 5. set sprite by direction
+
+mask_index = sprite[DOWN];
+if (xspd != 0 || yspd != 0) { //esta parte estas declarando igual entonces puedes volverlo un OR
+    if (xspd > 0) face = RIGHT;
+    else if (xspd < 0) face = LEFT;
+    else if (yspd > 0) face = DOWN;
+    else if (yspd < 0) face = UP;
+}
+sprite_index = sprite[face];
+
+// 6. resting animation 
+if (xspd == 0 && yspd == 0) {
+    switch (face) {
+        case DOWN: sprite_index = sprRed_Idle; break;
+        case LEFT: image_index = 0; break;
+        case RIGHT: image_index = 0; break;
+        case UP: image_index = 0; break;
+    }
+}
+
+// 7. Special animation in each room
+if (room == rmBath_Start) {
+    can_move = false;
+    sprite_index = spr_sleeping;
+    sprite_set_speed(sprite_index, 2, spritespeed_framespersecond);
+} else if (room == rmBath_Start_2) {
+    can_move = false;
+    sprite_index = spr_waking;
+    sprite_set_speed(sprite_index, 3, spritespeed_framespersecond);
+} else {
+    sprite_set_speed(sprite_index, 6, spritespeed_framespersecond);
+}
+
+
+// 8. Running 
+running = keyboard_check(vk_shift);
+move_spd = base_spd;
+if (running) {
+    move_spd *= run_multiplier;
+    sprite_set_speed(sprite_index, 10, spritespeed_framespersecond);
+}
+
+// 9. Deepth
+depth = -bbox_bottom;

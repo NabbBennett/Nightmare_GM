@@ -1,0 +1,18 @@
+//@description Play the correct music
+if room == rmBath
+{
+	
+	set_song_ingame( sngWakeUp, 60, 0);
+}
+
+if room = rmHallway
+{
+	set_song_ingame( sngWakeUpRed, 2*60, 2*60);
+}
+
+if room == rmBath_Start
+{
+
+	set_song_ingame(sngStillDreaming, 60, 0);
+
+}

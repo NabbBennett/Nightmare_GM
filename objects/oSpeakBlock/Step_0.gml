@@ -1,0 +1,7 @@
+if place_meeting(x, y, oPlayer) && keyboard_check_pressed(vk_space) && !instance_exists(oTextBox) 
+	{
+
+	create_textbox(text_id);
+	keyboard_clear(vk_space);
+	}
+
